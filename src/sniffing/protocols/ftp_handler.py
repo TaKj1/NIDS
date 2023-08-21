@@ -1,5 +1,7 @@
+import re
 from scapy.layers.inet import TCP, IP
-from ..database import add_to_database
+from ..database import add_to_databaseFTP
+
 
 def process_ftp_packet(packet):
     if packet.haslayer(IP) and packet.haslayer(TCP) and packet[TCP].payload:
@@ -15,8 +17,14 @@ def process_ftp_packet(packet):
         
         if "anonymous" in payload_str:
             print("[DEBUG] Detected 'anonymous' in payload.")
-            add_to_database(ip_address, "anonymous")
+            add_to_databaseFTP(ip_address, "anonymous")
         elif "530" in payload_str:  # 530 is a common FTP error code for login failure
             print("[DEBUG] Detected '530' in payload.")
-            username = "unknown"
-            add_to_database(ip_address, username)
+            attempt_match = re.search(r"Login incorrect for user (\w+): (\w+)", payload_str)
+            if attempt_match:
+                username = attempt_match.group(1)  # Capture the matched username
+                password = attempt_match.group(2)  # Capture the matched password
+                print(f"[DEBUG] Incorrect login attempt with username: {username} and password: {password}")
+            else:
+                username = "unknown"  # Fallback to 'unknown' if regex match fails
+            add_to_databaseFTP(ip_address, username)

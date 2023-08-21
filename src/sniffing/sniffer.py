@@ -2,9 +2,9 @@ from scapy.all import *
 from .protocols import ftp_handler
 from scapy.layers.inet import TCP, IP
 from .database import setup_database
+from .protocols import nmap_handler
 
-if 1 == 1:
- setup_database()
+setup_database()
 
 
 def get_interface_list():
@@ -17,14 +17,16 @@ def get_interface_list():
     return interfaces
 
 def packet_callback(packet):
-    # For FTP packets (on port 21), we'll process them using ftp_handler
-    if packet.haslayer(TCP) and (packet[TCP].dport == 21 or packet[TCP].sport == 21):
-
-        
-        ftp_handler.process_ftp_packet(packet)
+    if packet.haslayer(TCP):
+        if packet[TCP].dport == 21 or packet[TCP].sport == 21:
+            ftp_handler.process_ftp_packet(packet)
+        else:
+            # For TCP packets not on port 21, check for potential nmap scans
+            nmap_handler.process_nmap_packet(packet)
     else:
-        # Print out the raw packet data for the other protocols
+        # Handle non-TCP packets (e.g., UDP, ICMP)
         print(packet)
+
 
 def select_interface():
     interfaces = get_interface_list()
@@ -46,10 +48,13 @@ def select_interface():
             print("Please enter a valid number.")
 
 def main():
-    selected_interface = select_interface()
+    print("Sniffer is running...")
+    
+    # Print out the list of interfaces
+    # select_interface()
     # Capture packets in promiscuous mode
-    fitler_string = "tcp port 21 "
-    sniff(prn=packet_callback, store=0, iface=selected_interface, filter=fitler_string, count=0)
+   
+    sniff(prn=packet_callback, store=0, iface=select_interface(), filter="", count=0)
 
 
 if __name__ == "__main__":
