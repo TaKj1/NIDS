@@ -19,10 +19,10 @@ A simple Network Intrusion Detection System (IDS) built with Python and Scapy.
 
 
 ## Docker Installation
-1.Ensure you have Docker installed. If not, follow the instructions https://docs.docker.com/get-docker/.
+1. Ensure you have Docker installed. If not, follow the instructions https://docs.docker.com/get-docker/
 2. Navite to the root directory: cd /path/to/your/NIDS
-3.Build the image: docker build -t ids_tool .
-4.Run the container :
+3. Build the image: docker build -t ids_tool .
+4. Run the container :
 docker run -it --net=host --privileged ids_tool:latest
 it:
 - "-i" (interactive): Keeps the standard input (STDIN) open even if not attached. This means that you can interact with the container's terminal.
