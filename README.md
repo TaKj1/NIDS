@@ -15,6 +15,7 @@ A simple Network Intrusion Detection System (IDS) built with Python and Scapy.
 2. Clone the repository :
 3. Navigate to the project directory cd/path/to/NIDS:
 4.Install the required packages: pip install -r requirements.txt:
+
 5.You can now start from terminal : python3 -m src.sniffing.sniffer
 
 
