@@ -25,7 +25,7 @@ def packet_callback(packet):
             nmap_handler.process_nmap_packet(packet)
     else:
         # Handle non-TCP packets (e.g., UDP, ICMP)
-        print(packet)
+        print(packet.summary())
 
 
 def select_interface():
