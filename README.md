@@ -1,6 +1,6 @@
-# Python IDS Tool
+# Python NIDS Tool
 
-A simple Intrusion Detection System (IDS) built with Python and Scapy.
+A simple Network Intrusion Detection System (IDS) built with Python and Scapy.
 
 ## Features
 
