@@ -9,13 +9,26 @@ A simple Network Intrusion Detection System (IDS) built with Python and Scapy.
 - Detects common nmap scans like SYN, NULL, and Xmas Tree scans.
 - Extensible to support other protocols and detection rules.
 
-## Installation
+## Linux Installation
 
 1. Ensure you have Python 3.x installed.
-2. Clone the repository :
-3. Navigate to the project directory cd/path/to/NIDS:
+2. Clone the repository .
+3. Navigate to the project directory cd/path/to/NIDS
+4. Install the required packages: pip install -r requirements.txt
+5. You can now start from terminal : python3 -m src.sniffing.sniffer
 
-4.Install the required packages: pip install -r requirements.txt:
+
+## Docker Installation
+1. Ensure you have Docker installed. If not, follow the instructions https://docs.docker.com/get-docker/
+2. Navite to the root directory: cd /path/to/your/NIDS
+3. Build the image: docker build -t ids_tool .
+4. Run the container :
+docker run -it --net=host --privileged ids_tool:latest
+it:
+- "-i" (interactive): Keeps the standard input (STDIN) open even if not attached. This means that you can interact with the container's terminal.
+-"t" (pseudo-TTY): Allocates a pseudo-TTY or terminal inside the new container. This allows you to see a terminal-like interface when you're interacting with the running container.
+"--net=host": Uses the host network mode
+5. Inside the container , you can now start from terminal : python3 -m src.sniffing.sniffer
 
 ## Future Features
 
