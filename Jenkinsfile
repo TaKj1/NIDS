@@ -1,14 +1,11 @@
-pipeline{
-            agent{   
-                node{
-                    label 'docker-agent-python'
-                }
-                 triggers {
-            pollSCM '* * * * *'
-        }
-    stages{
-        stage('Build'){
-             steps {
+pipeline {
+    agent {
+        label 'docker-agent-python'
+    }
+    
+    stages {
+        stage('Build') {
+            steps {
                 echo "Building.."
                 sh '''
                 cd NIDS
@@ -16,14 +13,6 @@ pipeline{
                 '''
             }
         }
+        // ... additional stages ...
     }
-
-
-               }
-
-
-
-
-
-
 }
